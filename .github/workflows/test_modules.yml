@@ -70,18 +70,22 @@ jobs:
       matrix:
         map_args: ["-d 'ENA' -f relecov_tools/schema/ena_schema.json", "-d 'GISAID' -f relecov_tools/schema/gisaid_schema.json"]
     steps:
+
     - name: Set up Python 3.9.16
       uses: actions/setup-python@v3
       with:
         python-version: '3.9.16'
+
     - name: Checkout code
       uses: actions/checkout@v3
       with:
         path: .
+
     - name: Install package and dependencies
       run: |
         pip install -r requirements.txt
         pip install .
+
     - name: Run each module tests
       run: |
         relecov-tools map -j tests/data/map_validate/processed_metadata_lab_test.json -p relecov_tools/schema/relecov_schema.json ${{ matrix.map_args }} -o .
