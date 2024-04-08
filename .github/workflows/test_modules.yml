@@ -7,6 +7,9 @@ on:
     types: [opened, reopened, synchronize, closed]
     branches: "**"
 
+concurrency:
+  group: test_modules
+
 jobs:
   security_check:
     runs-on: ubuntu-latest
@@ -27,8 +30,6 @@ jobs:
 
   test_sftp_handle:
     needs: security_check
-    concurrency:
-      group: sftp_handle
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 1
